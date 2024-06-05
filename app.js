@@ -5,7 +5,7 @@ import router from './routes/index.js'
 const app = express()
 
 const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING
-// await connectDB(DB_CONNECTION_STRING)
+await connectDB(DB_CONNECTION_STRING)
 
 
 app.use(express.json())
@@ -19,7 +19,7 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 async function connectDB(DB_CONNECTION_STRING) {
 
   try {
-    await mongoose.connect(DB_CONNECTION_STRING)
+    await mongoose.connect(DB_CONNECTION_STRING, { dbName: 'tmpDB' })
 
     console.log('MongoDB connected...')
   } catch (e) {
