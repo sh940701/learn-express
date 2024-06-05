@@ -8,3 +8,14 @@ export const extractPostId = (req, res, next) => {
   req.postId = postId
   next()
 }
+
+export const extractCommentId = (req, res, next) => {
+  const { _id: commentId } = req.params
+
+  if (!commentId) {
+    return res.status(400).json({ error: 'Comment ID is required' })
+  }
+
+  req.commentId = commentId
+  next()
+}
