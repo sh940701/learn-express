@@ -7,6 +7,7 @@ const app = express()
 dotenv.config()
 
 const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING
+export const JWT_SECRET = process.env.JWT_SECRET
 await connectDB(DB_CONNECTION_STRING)
 
 
