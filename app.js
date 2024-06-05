@@ -1,8 +1,10 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import router from './routes/index.js'
+import dotenv from 'dotenv'
 
 const app = express()
+dotenv.config()
 
 const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING
 await connectDB(DB_CONNECTION_STRING)
