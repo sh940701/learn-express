@@ -23,7 +23,7 @@ router
   .post(async (req, res) => {
     // 게시글 작성
     try {
-      const posts = await postService.createPost(res.body)
+      const posts = await postService.createPost(req.body)
 
       return res.status(201).json(posts)
     } catch (e) {
