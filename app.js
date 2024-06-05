@@ -1,18 +1,16 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import router from './routes/index.js'
 
 const app = express()
 
 const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING
-await connectDB(DB_CONNECTION_STRING)
-
+// await connectDB(DB_CONNECTION_STRING)
 
 
 app.use(express.json())
 
-app.get('/', (req, res) => {
-  res.status(200).json({ message: 'hello, world!' })
-})
+app.use('/', router)
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
