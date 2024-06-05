@@ -27,9 +27,9 @@ router
   .post(async (req, res) => {
     // 게시글 작성
     try {
-      const posts = await postService.createPost(req.body)
+      const post = await postService.createPost(req.body)
 
-      return res.status(201).json(posts)
+      return res.status(201).json(post)
     } catch (e) {
       res.status(400).json({ error: e.message })
     }
