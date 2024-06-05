@@ -1,3 +1,5 @@
+import mongoose from 'mongoose'
+
 export const extractPostId = (req, res, next) => {
   const { _id: postId } = req.params
 
@@ -5,7 +7,7 @@ export const extractPostId = (req, res, next) => {
     return res.status(400).json({ error: 'Post ID is required' })
   }
 
-  req.postId = postId
+  req.postId = new mongoose.Types.ObjectId(postId)
   next()
 }
 
@@ -16,6 +18,6 @@ export const extractCommentId = (req, res, next) => {
     return res.status(400).json({ error: 'Comment ID is required' })
   }
 
-  req.commentId = commentId
+  req.commentId = new mongoose.Types.ObjectId(commentId)
   next()
 }

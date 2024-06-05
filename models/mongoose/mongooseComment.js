@@ -15,11 +15,11 @@ export class MongooseComment extends IComment {
   }
 
   async getComments(postId) {
-    return await Comment.find({ post: postId }).exec()
+    return await Comment.find({ post: postId }).sort({ createdAt: -1 }).exec()
   }
 
   async updateComment(commentId, comment) {
-    return await Comment.findByIdAndUpdate(commentId, comment).exec()
+    return await Comment.findOneAndUpdate({ _id: commentId, post: comment.post }, { body: comment.body }).exec()
   }
 
   async deleteComment(commentId) {

@@ -17,18 +17,18 @@ export class MongoosePost extends IPost {
   }
 
   async getPost(postId) {
-    return await Post.findById(postId).exec()
+    return await Post.find({ _id: postId }, { title: 1, author: 1, body: 1, createdAt: 1 }).exec()
   }
 
   async getPosts() {
-    return await Post.find().exec()
+    return await Post.find({}, { title: 1, author: 1, createdAt: 1 }).sort({ createdAt: -1 }).exec()
   }
 
-  async updatePost(postId, post) {
-    return await Post.findByIdAndUpdate(postId, post, { new: true }).exec()
+  async updatePost(postId, password, post) {
+    return await Post.findOneAndUpdate({ _id: postId, password }, post, { new: true }).exec()
   }
 
-  async deletePost(postId) {
-    return await Post.findByIdAndDelete(postId).exec()
+  async deletePost(postId, password) {
+    return await Post.findOneAndDelete({ _id: postId, password }).exec()
   }
 }

@@ -15,11 +15,11 @@ export class PostService {
     return await this.postModel.getPosts()
   }
 
-  async updatePost(postId, post) {
-    return await this.postModel.updatePost(postId, post)
+  async updatePost(postId, password, post) {
+    return await this.postModel.updatePost(postId, password, post)
   }
 
-  async deletePost(postId) {
-    return await this.postModel.deletePost(postId)
+  async deletePost(postId, password) {
+    return await this.postModel.deletePost(postId, password)
   }
 }
