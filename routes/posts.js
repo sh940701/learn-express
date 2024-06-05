@@ -56,7 +56,7 @@ router
   .delete(extractPostId, async (req, res) => {
     try {
       await postService.deletePost(req.postId)
-      return res.status(200).json({ message: 'User deleted' })
+      return res.status(200).json({ message: 'Post deleted' })
     } catch (e) {
       return res.status(500).json({ error: e.message })
     }
