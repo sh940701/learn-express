@@ -4,8 +4,18 @@ const router = Router()
 
 router
   .route('/')
-  .get((req, res, next) => {
-    return res.json({ msg: 'comments' })
+  .post((req, res, next) => {
+    // 댓글 작성
   })
+
+router
+  .route('/:comment_id')
+  .patch((req, res, next) => {
+    // 댓글 수정
+  })
+  .delete((req, res, next) => {
+    // 댓글 삭제
+  })
+
 
 export default router
