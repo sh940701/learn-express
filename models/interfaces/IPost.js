@@ -18,11 +18,11 @@ export class IPost {
     throw new Error('Method \'getPosts()\' must be implemented.')
   }
 
-  async updatePost(postId) {
+  async updatePost(postId, nickname, post) {
     throw new Error('Method \'updatePost()\' must be implemented.')
   }
 
-  async deletePost(postId) {
+  async deletePost(postId, nickname) {
     throw new Error('Method \'deletePost()\' must be implemented.')
   }
 }

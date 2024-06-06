@@ -10,7 +10,7 @@ export class IUser {
     throw new Error('Method \'createUser()\' must be implemented.')
   }
 
-  async getUser(userId) {
+  async getUser(nickname) {
     throw new Error('Method \'getUser()\' must be implemented.')
   }
 }

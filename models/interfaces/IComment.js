@@ -14,11 +14,11 @@ export class IComment {
     throw new Error('Method \'getComments()\' must be implemented.')
   }
 
-  async updateComment(commentId) {
+  async updateComment(commentId, comment, nickname) {
     throw new Error('Method \'updateComment()\' must be implemented.')
   }
 
-  async deleteComment(commentId) {
+  async deleteComment(commentId, nickname) {
     throw new Error('Method \'deleteComments()\' must be implemented.')
   }
 }
