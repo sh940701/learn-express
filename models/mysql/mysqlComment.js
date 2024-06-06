@@ -42,7 +42,6 @@ export class MysqlComment extends IComment {
   }
 
   async updateComment(commentId, comment, nickname) {
-    console.log(commentId)
     const dbComment = await Comment.findOne({ where: { id: commentId, author: nickname } })
 
     if (!dbComment) return null
