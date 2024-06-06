@@ -16,11 +16,11 @@ export class MongoosePost extends IPost {
   }
 
   async getPost(postId) {
-    return await Post.find({ _id: postId }, { _id: 0, title: 1, author: 1, body: 1, createdAt: 1 }).exec()
+    return await Post.find({ _id: postId }, { _id: 1, title: 1, author: 1, body: 1, createdAt: 1 }).exec()
   }
 
   async getPosts() {
-    return await Post.find({}, { _id: 0, title: 1, author: 1, createdAt: 1 }).sort({ createdAt: -1 }).exec()
+    return await Post.find({}, { _id: 1, title: 1, author: 1, createdAt: 1 }).sort({ createdAt: -1 }).exec()
   }
 
   async updatePost(postId, nickname, post) {
