@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { dbType } from '../app.js'
 
 export const extractPostId = (req, res, next) => {
   const { _id: postId } = req.params
@@ -7,7 +8,7 @@ export const extractPostId = (req, res, next) => {
     return res.status(400).json({ error: 'Post ID is required' })
   }
 
-  req.postId = new mongoose.Types.ObjectId(postId)
+  req.postId = dbType === 'mysql' ? postId : new mongoose.Types.ObjectId(postId)
   next()
 }
 
@@ -18,6 +19,6 @@ export const extractCommentId = (req, res, next) => {
     return res.status(400).json({ error: 'Comment ID is required' })
   }
 
-  req.commentId = new mongoose.Types.ObjectId(commentId)
+  req.commentId = dbType === 'mysql' ? commentId : new mongoose.Types.ObjectId(commentId)
   next()
 }
