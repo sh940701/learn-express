@@ -2,6 +2,8 @@ import express from 'express'
 import mongoose from 'mongoose'
 import router from './routes/index.js'
 import dotenv from 'dotenv'
+import swaggerUi from 'swagger-ui-express'
+import { swaggerSpec } from './config/swagger.js'
 
 const app = express()
 dotenv.config()
@@ -13,6 +15,7 @@ await connectDB(DB_CONNECTION_STRING)
 
 app.use(express.json())
 
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 app.use('/', router)
 
 const PORT = process.env.PORT || 3000
