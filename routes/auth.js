@@ -11,10 +11,55 @@ const router = Router()
 const userModel = new MysqlUser
 const userService = new UserService(userModel)
 
+/**
+ * @swagger
+ * /auth/signup:
+ *   post:
+ *     description: 회원가입
+ *     tags: [Auth]
+ *     produces:
+ *     - "application/json"
+ *     parameters:
+ *     - name: "body"
+ *       in: "body"
+ *       required: true
+ *       schema:
+ *         type: object
+ *         properties:
+ *           nickname:
+ *             type: string
+ *             example: 유저 닉네임
+ *           password:
+ *             type: string
+ *             example: 비밀번호
+ *           checkPassword:
+ *             type: string
+ *             example: 비밀번호 확인
+ *
+ *     responses:
+ *       201:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User create success
+ *       '400':
+ *         description: bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Bad Request
+ */
 router.post('/signup', async (req, res) => {
   // 회원가입
-
-  // validation
   const { nickname, password, checkPassword } = req.body
 
   if (password !== checkPassword) {
@@ -46,6 +91,51 @@ router.post('/signup', async (req, res) => {
   }
 })
 
+
+/**
+ * @swagger
+ * /auth/signin:
+ *   post:
+ *     description: 로그인
+ *     tags: [Auth]
+ *     produces:
+ *     - "application/json"
+ *     parameters:
+ *     - name: "body"
+ *       in: "body"
+ *       required: true
+ *       schema:
+ *         type: object
+ *         properties:
+ *           nickname:
+ *             type: string
+ *             example: 유저 닉네임
+ *           password:
+ *             type: string
+ *             example: 비밀번호
+ *
+ *     responses:
+ *       201:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 로그인 성공
+ *       '401':
+ *         description: UnAuthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: UnAuthorized
+ */
 router.post('/signin', async (req, res) => {
   // 로그인
   const { nickname, password } = req.body

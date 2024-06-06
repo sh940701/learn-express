@@ -34,11 +34,16 @@ export const Comment = sequelize.define('Comment', {
 
 export class MysqlComment extends IComment {
   async createComment(comment) {
-    return Comment.create(comment)
+    const { dataValues: { updatedAt, ...result } } = await Comment.create(comment)
+    return result
   }
 
   async getComments(postId) {
-    return Comment.findAll({ where: { post_id: postId }, order: [['createdAt', 'DESC']] })
+    return Comment.findAll({
+      where: { post_id: postId },
+      order: [['createdAt', 'DESC']],
+      attributes: { exclude: ['updatedAt'] },
+    })
   }
 
   async updateComment(commentId, comment, nickname) {

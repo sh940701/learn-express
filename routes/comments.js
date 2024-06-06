@@ -10,6 +10,64 @@ const router = Router()
 const commentModel = new MysqlComment()
 const commentService = new CommentService(commentModel)
 
+
+/**
+ * @swagger
+ * /comments:
+ *   post:
+ *     description: 댓글 생성
+ *     tags: [Comment]
+ *     produces:
+ *     - "application/json"
+ *     parameters:
+ *     - name: "body"
+ *       in: "body"
+ *       required: true
+ *       schema:
+ *         type: object
+ *         properties:
+ *           body:
+ *             type: string
+ *             example: 댓글 내용
+ *           post_id:
+ *             type: int
+ *             example: 1
+ *
+ *     responses:
+ *       201:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: int
+ *                   example: 1
+ *                 body:
+ *                   type: string
+ *                   example: 댓글 내용
+ *                 post_id:
+ *                   type: int
+ *                   example: 1
+ *                 author:
+ *                   type: string
+ *                   example: nickname
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                   example: 2024-06-05T10:48:23.135Z
+ *       '400':
+ *         description: bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Bad Request
+ */
 router.post('/', [authenticateUser, async (req, res) => {
   // 댓글 작성
   const { nickname } = req.token
@@ -23,6 +81,74 @@ router.post('/', [authenticateUser, async (req, res) => {
   }
 }])
 
+
+/**
+ * @swagger
+ * /comments/:id:
+ *   patch:
+ *     description: 댓글 생성
+ *     tags: [Comment]
+ *     produces:
+ *     - "application/json"
+ *     parameters:
+ *     - name: "id"
+ *       in: "path"
+ *       required: true
+ *       schema:
+ *         type: int
+ *         example: 1
+ *     - name: "body"
+ *       in: "body"
+ *       required: true
+ *       schema:
+ *         type: object
+ *         properties:
+ *           body:
+ *             type: string
+ *             example: 댓글 내용
+ *           post_id:
+ *             type: int
+ *             example: 1
+ *
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: int
+ *                   example: 1
+ *                 body:
+ *                   type: string
+ *                   example: 댓글 내용
+ *                 post_id:
+ *                   type: int
+ *                   example: 1
+ *                 author:
+ *                   type: string
+ *                   example: nickname
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                   example: 2024-06-05T10:48:23.135Z
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   example: 2024-06-05T10:48:23.135Z
+ *       '400':
+ *         description: bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Bad Request
+ */
 router.patch('/:_id', [authenticateUser, extractCommentId, async (req, res) => {
   // 댓글 수정
   const { nickname } = req.token
@@ -37,6 +163,45 @@ router.patch('/:_id', [authenticateUser, extractCommentId, async (req, res) => {
   }
 }])
 
+
+/**
+ * @swagger
+ * /comments/:id:
+ *   delete:
+ *     description: 댓글 삭제
+ *     tags: [Comment]
+ *     produces:
+ *     - "application/json"
+ *     parameters:
+ *     - name: "id"
+ *       in: "path"
+ *       required: true
+ *       schema:
+ *         type: int
+ *         example: 1
+ *
+ *     responses:
+ *       200:
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Comment deleted
+ *       '400':
+ *         description: bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Bad Request
+ */
 router.delete('/:_id', [authenticateUser, extractCommentId, async (req, res) => {
   // 댓글 삭제
   const { nickname } = req.token

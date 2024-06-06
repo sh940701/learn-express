@@ -29,16 +29,18 @@ export const Post = sequelize.define('Post', {
 
 export class MysqlPost extends IPost {
   async createPost(post) {
-    return Post.create(post)
+    const { dataValues: { updatedAt, ...result } } = await Post.create(post)
+    return result
   }
 
   async getPost(postId) {
-    return Post.findByPk(postId)
+    return Post.findByPk(postId, { attributes: { exclude: ['updatedAt'] } })
   }
 
   async getPosts() {
     return Post.findAll({
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'DESC']],
+      attributes: { exclude: ['body', 'updatedAt'] },
     })
   }
 
