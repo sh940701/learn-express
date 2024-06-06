@@ -11,11 +11,11 @@ export class CommentService {
     return this.commentModel.getComments(postId)
   }
 
-  async updateComment(commentId, comment) {
-    return this.commentModel.updateComment(commentId, comment)
+  async updateComment(commentId, comment, nickname) {
+    return this.commentModel.updateComment(commentId, comment, nickname)
   }
 
-  async deleteComment(commentId) {
-    return this.commentModel.deleteComment(commentId)
+  async deleteComment(commentId, nickname) {
+    return this.commentModel.deleteComment(commentId, nickname)
   }
 }
