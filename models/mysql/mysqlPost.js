@@ -22,28 +22,50 @@ export const Post = sequelize.define('Post', {
     allowNull: false,
     references: {
       model: User,
+      key: 'nickname',
     },
   },
 }, { timestamps: true })
 
 export class MysqlPost extends IPost {
   async createPost(post) {
-    super.createPost(post)
+    return Post.create(post)
   }
 
   async getPost(postId) {
-    super.getPost(postId)
+    return Post.findByPk(postId)
   }
 
   async getPosts() {
-    super.getPosts()
+    return Post.findAll({
+      order: [['createdAt', 'DESC']]
+    })
   }
 
-  async updatePost(postId) {
-    super.updatePost(postId)
+  async updatePost(postId, nickname, post) {
+    const dbPost = await Post.findOne({ where: { id: postId, author: nickname } })
+
+    if (!dbPost) return null
+
+    dbPost.title = post.title
+    dbPost.body = post.body
+    await dbPost.save()
+
+    return dbPost
   }
 
-  async deletePost(postId) {
-    super.deletePost(postId)
+  async deletePost(postId, nickname) {
+
+    const dbPost = await Post.findOne({ where: { id: postId, author: nickname } })
+
+    if (!dbPost) return null
+
+    await Post.destroy({
+      where: {
+        id: postId, author: nickname,
+      },
+    })
+
+    return true
   }
 }

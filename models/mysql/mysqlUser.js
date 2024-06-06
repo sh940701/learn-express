@@ -15,10 +15,10 @@ export const User = sequelize.define('User', {
 
 export class MysqlUser extends IUser {
   async createUser(user) {
-    super.createUser(user)
+    return User.create(user)
   }
 
-  async getUser(userId) {
-    super.getUser(userId)
+  async getUser(nickname) {
+    return User.findByPk(nickname)
   }
 }

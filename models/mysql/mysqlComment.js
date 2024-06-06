@@ -34,18 +34,36 @@ export const Comment = sequelize.define('Comment', {
 
 export class MysqlComment extends IComment {
   async createComment(comment) {
-    super.createComment(comment)
+    return Comment.create(comment)
   }
 
   async getComments(postId) {
-    super.getComments(postId)
+    return Comment.findAll({ where: { post_id: postId }, order: [['createdAt', 'DESC']] })
   }
 
-  async updateComment(commentId) {
-    super.updateComment(commentId)
+  async updateComment(commentId, comment, nickname) {
+    console.log(commentId)
+    const dbComment = await Comment.findOne({ where: { id: commentId, author: nickname } })
+
+    if (!dbComment) return null
+
+    dbComment.body = comment.body
+    await dbComment.save()
+
+    return dbComment
   }
 
-  async deleteComment(commentId) {
-    super.deleteComment(commentId)
+  async deleteComment(commentId, nickname) {
+    const dbComment = await Comment.findOne({ where: { id: commentId, author: nickname } })
+
+    if (!dbComment) return null
+
+    await Comment.destroy({
+      where: {
+        id: commentId, author: nickname,
+      },
+    })
+
+    return true
   }
 }
