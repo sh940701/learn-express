@@ -1,12 +1,13 @@
 import { Router } from 'express'
-import { MongooseComment } from '../models/mongoose/mongooseComment.js'
 import { CommentService } from '../services/commentService.js'
 import { extractCommentId } from '../middleware/parser.js'
 import { authenticateUser } from '../middleware/auth.js'
+import { MysqlComment } from '../models/mysql/mysqlComment.js'
 
 const router = Router()
 
-const commentModel = new MongooseComment()
+// const commentModel = new MongooseComment()
+const commentModel = new MysqlComment()
 const commentService = new CommentService(commentModel)
 
 router.post('/', [authenticateUser, async (req, res) => {

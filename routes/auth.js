@@ -3,10 +3,12 @@ import { MongooseUser } from '../models/mongoose/mongooseUser.js'
 import { UserService } from '../services/userService.js'
 import bcrypt from 'bcrypt'
 import { generateJwtToken } from '../utils/auth.js'
+import { MysqlUser } from '../models/mysql/mysqlUser.js'
 
 const router = Router()
 
-const userModel = new MongooseUser()
+// const userModel = new MongooseUser()
+const userModel = new MysqlUser
 const userService = new UserService(userModel)
 
 router.post('/signup', async (req, res) => {
