@@ -21,6 +21,8 @@
     "globals": "^15.3.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.1",
+    "mysql2": "^3.10.0",
+    "sequelize": "^6.37.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "typescript-eslint": "^7.12.0"
