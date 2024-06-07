@@ -34,7 +34,7 @@ const commentService = new CommentService(commentModel)
  *                 type: object
  *                 properties:
  *                   id:
- *                     type: int
+ *                     type: integer
  *                     example: 1
  *                   title:
  *                     type: string
@@ -76,19 +76,18 @@ router.get('/', async (req, res) => {
  *     tags: [Post]
  *     produces:
  *     - "application/json"
- *     parameters:
- *     - name: "body"
- *       in: "body"
- *       required: true
- *       schema:
- *         type: object
- *         properties:
- *           title:
- *             type: string
- *             example: 게시글 제목
- *           body:
- *             type: string
- *             example: 게시글 내용
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: 게시글 제목
+ *               body:
+ *                 type: string
+ *                 example: 게시글 내용
  *
  *     responses:
  *       201:
@@ -99,7 +98,7 @@ router.get('/', async (req, res) => {
  *               type: object
  *               properties:
  *                 id:
- *                   type: int
+ *                   type: integer
  *                   example: 1
  *                 title:
  *                   type: string
@@ -139,7 +138,7 @@ router.post('/', [authenticateUser, async (req, res) => {
 
 /**
  * @swagger
- * /posts/:id:
+ * /posts/{id}:
  *   get:
  *     description: 단일 게시글 조회
  *     tags: [Post]
@@ -150,7 +149,7 @@ router.post('/', [authenticateUser, async (req, res) => {
  *       in: "path"
  *       required: true
  *       schema:
- *         type: int
+ *         type: integer
  *         example: 1
  *
  *     responses:
@@ -162,7 +161,7 @@ router.post('/', [authenticateUser, async (req, res) => {
  *               type: object
  *               properties:
  *                 id:
- *                   type: int
+ *                   type: integer
  *                   example: 1
  *                 title:
  *                   type: string
@@ -187,11 +186,22 @@ router.post('/', [authenticateUser, async (req, res) => {
  *                 error:
  *                   type: string
  *                   example: Bad Request
+ *       '404':
+ *         description: Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Not Found
  */
 router.get('/:_id', [extractPostId, async (req, res) => {
   // 단일 게시글 조회
   try {
     const post = await postService.getPost(req.postId)
+    if (!post) return res.status(404).json({ error: 'Not Found' })
 
     return res.status(200).json(post)
   } catch (e) {
@@ -201,31 +211,32 @@ router.get('/:_id', [extractPostId, async (req, res) => {
 
 /**
  * @swagger
- * /posts:id:
+ * /posts/{id}:
  *   patch:
  *     description: 게시글 수정
  *     tags: [Post]
  *     produces:
  *     - "application/json"
  *     parameters:
- *     - name: "id"
- *       in: "path"
+ *       - name: "id"
+ *         in: "path"
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *     requestBody:
  *       required: true
- *       schema:
- *         type: int
- *         example: 1
- *     - name: "body"
- *       in: "body"
- *       required: true
- *       schema:
- *         type: object
- *         properties:
- *           title:
- *             type: string
- *             example: 게시글 제목
- *           body:
- *             type: string
- *             example: 게시글 내용
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: 게시글 제목
+ *               body:
+ *                 type: string
+ *                 example: 게시글 내용
  *
  *     responses:
  *       201:
@@ -236,7 +247,7 @@ router.get('/:_id', [extractPostId, async (req, res) => {
  *               type: object
  *               properties:
  *                 id:
- *                   type: int
+ *                   type: integer
  *                   example: 1
  *                 title:
  *                   type: string
@@ -281,7 +292,7 @@ router.patch('/:_id', [authenticateUser, extractPostId, async (req, res) => {
 
 /**
  * @swagger
- * /posts:id:
+ * /posts/{id}:
  *   delete:
  *     description: 게시글 삭제
  *     tags: [Post]
@@ -292,7 +303,7 @@ router.patch('/:_id', [authenticateUser, extractPostId, async (req, res) => {
  *       in: "path"
  *       required: true
  *       schema:
- *         type: int
+ *         type: integer
  *         example: 1
  *
  *     responses:
@@ -332,12 +343,19 @@ router.delete('/:_id', [authenticateUser, extractPostId, async (req, res) => {
 
 /**
  * @swagger
- * /posts/:id/comments:
+ * /posts/{id}/comments:
  *   get:
  *     description: 게시글 댓글 조회
  *     tags: [Post]
  *     produces:
  *     - "application/json"
+ *     parameters:
+ *     - name: "id"
+ *       in: "path"
+ *       required: true
+ *       schema:
+ *         type: integer
+ *         example: 1
  *     responses:
  *       200:
  *         description: successful operation
@@ -349,13 +367,13 @@ router.delete('/:_id', [authenticateUser, extractPostId, async (req, res) => {
  *                 type: object
  *                 properties:
  *                   id:
- *                     type: int
+ *                     type: integer
  *                     example: 1
  *                   body:
  *                     type: string
  *                     example: 댓글 내용
  *                   post_id:
- *                     type: int
+ *                     type: integer
  *                     example: 1
  *                   author:
  *                     type: string

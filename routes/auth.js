@@ -19,22 +19,21 @@ const userService = new UserService(userModel)
  *     tags: [Auth]
  *     produces:
  *     - "application/json"
- *     parameters:
- *     - name: "body"
- *       in: "body"
- *       required: true
- *       schema:
- *         type: object
- *         properties:
- *           nickname:
- *             type: string
- *             example: 유저 닉네임
- *           password:
- *             type: string
- *             example: 비밀번호
- *           checkPassword:
- *             type: string
- *             example: 비밀번호 확인
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nickname:
+ *                 type: string
+ *                 example: 유저 닉네임
+ *               password:
+ *                 type: string
+ *                 example: 비밀번호
+ *               checkPassword:
+ *                 type: string
+ *                 example: 비밀번호 확인
  *
  *     responses:
  *       201:
@@ -61,6 +60,10 @@ const userService = new UserService(userModel)
 router.post('/signup', async (req, res) => {
   // 회원가입
   const { nickname, password, checkPassword } = req.body
+
+  if (!nickname || !password || !checkPassword) {
+    return res.status(400).json({ error: 'Bad Request' })
+  }
 
   if (password !== checkPassword) {
     return res.status(401).json({ error: '비밀번호가 일치하지 않습니다.' })
@@ -100,19 +103,18 @@ router.post('/signup', async (req, res) => {
  *     tags: [Auth]
  *     produces:
  *     - "application/json"
- *     parameters:
- *     - name: "body"
- *       in: "body"
- *       required: true
- *       schema:
- *         type: object
- *         properties:
- *           nickname:
- *             type: string
- *             example: 유저 닉네임
- *           password:
- *             type: string
- *             example: 비밀번호
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nickname:
+ *                 type: string
+ *                 example: 유저 닉네임
+ *               password:
+ *                 type: string
+ *                 example: 비밀번호
  *
  *     responses:
  *       201:

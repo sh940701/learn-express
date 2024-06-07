@@ -19,19 +19,18 @@ const commentService = new CommentService(commentModel)
  *     tags: [Comment]
  *     produces:
  *     - "application/json"
- *     parameters:
- *     - name: "body"
- *       in: "body"
- *       required: true
- *       schema:
- *         type: object
- *         properties:
- *           body:
- *             type: string
- *             example: 댓글 내용
- *           post_id:
- *             type: int
- *             example: 1
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               body:
+ *                 type: string
+ *                 example: 댓글 내용
+ *               post_id:
+ *                 type: integer
+ *                 example: 1
  *
  *     responses:
  *       201:
@@ -42,13 +41,13 @@ const commentService = new CommentService(commentModel)
  *               type: object
  *               properties:
  *                 id:
- *                   type: int
+ *                   type: integer
  *                   example: 1
  *                 body:
  *                   type: string
  *                   example: 댓글 내용
  *                 post_id:
- *                   type: int
+ *                   type: integer
  *                   example: 1
  *                 author:
  *                   type: string
@@ -84,7 +83,7 @@ router.post('/', [authenticateUser, async (req, res) => {
 
 /**
  * @swagger
- * /comments/:id:
+ * /comments/{id}:
  *   patch:
  *     description: 댓글 생성
  *     tags: [Comment]
@@ -95,20 +94,17 @@ router.post('/', [authenticateUser, async (req, res) => {
  *       in: "path"
  *       required: true
  *       schema:
- *         type: int
+ *         type: integer
  *         example: 1
- *     - name: "body"
- *       in: "body"
- *       required: true
- *       schema:
- *         type: object
- *         properties:
- *           body:
- *             type: string
- *             example: 댓글 내용
- *           post_id:
- *             type: int
- *             example: 1
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               body:
+ *                 type: string
+ *                 example: 댓글 내용
  *
  *     responses:
  *       200:
@@ -119,7 +115,7 @@ router.post('/', [authenticateUser, async (req, res) => {
  *               type: object
  *               properties:
  *                 id:
- *                   type: int
+ *                   type: integer
  *                   example: 1
  *                 body:
  *                   type: string
@@ -166,7 +162,7 @@ router.patch('/:_id', [authenticateUser, extractCommentId, async (req, res) => {
 
 /**
  * @swagger
- * /comments/:id:
+ * /comments/{id}:
  *   delete:
  *     description: 댓글 삭제
  *     tags: [Comment]
@@ -177,7 +173,7 @@ router.patch('/:_id', [authenticateUser, extractCommentId, async (req, res) => {
  *       in: "path"
  *       required: true
  *       schema:
- *         type: int
+ *         type: integer
  *         example: 1
  *
  *     responses:
